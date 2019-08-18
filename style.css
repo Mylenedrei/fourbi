@@ -1,0 +1,78 @@
+body{
+  background-color: '#FFB5FF';
+  font-family: 'Lora', serif;
+}
+
+#imglogo{
+  width:300px;
+}
+
+
+header{
+  display:table;
+ /* background-color: white;*/
+  width:100vw;
+  height:20px;
+  position: fixed;
+  top:0px;
+ 
+}
+
+header a{
+  padding: 20px;
+  width: auto;
+  height: 100%;;
+  position: absolute;
+  right: 0;
+
+}
+
+ nav{
+  width: auto;
+  height: auto;
+ position: absolute;
+ top:50%;
+}
+
+#btn-prev{
+left: 20px;
+}
+
+#btn-prev img{
+  transform: scaleX(-1);
+}
+
+#btn-next{
+  right: 20px;
+  text-align: right;
+  
+}
+
+main div{
+  width: 80%;
+  background-color: green;
+}
+
+#titreObjet{
+text-decoration: underline;
+}
+
+#explication{
+  position:fixed;
+  width:350px;
+  left:25px;
+  font-size: 90%;
+  bottom:5vh;
+  line-height: 1.4;
+  /*background-color: azure;*/
+  border-width:1px;
+  padding: 9px;
+  /*border-radius: 5px;
+  border-width:1px;
+ border-style:solid;
+ border-color:black;*/
+  opacity: 0.95;
+
+}
+
+
