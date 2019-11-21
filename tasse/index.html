@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>GLEUGLEU</title>
+    <title>FOURBI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Lora&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../style.css">
     <!-- link p5.js and its addons like p5.dom.js or p5.sound.js -->
     <script src="../libraries/p5.js" type="text/javascript"></script>
-    <link rel="shortcut icon" href="capital/img/favicon_rose.jpg">
+
     <!-- link p5.play.js -->
     <script src="../libraries/p5.play.js" type="text/javascript"></script>
     <script src="../libraries/p5.sound.js" type="text/javascript"></script>
     <script src="tasse.js" type="text/javascript"></script>
- 
+    <script src="../interface.js" type="text/javascript"></script>
+
     <meta charset="UTF-8">
   
   </head>
   <body onresize="resize()" style="overflow:hidden; margin:0;" >
 
  <header>
-  <a href="/"><img src="../img/info.png"></a>
+  <a id="interrogation" onclick="montrerInfo()"><img src="../img/info.png"></a>
 </header>
 
 
@@ -31,7 +32,28 @@
       <a href="../fourchette/"><img src="../img/fleche.png"></a>
     </nav>
 
-      <div id="explication">
+    <div class="informations">
+    <div class="Aligner-item Aligner-item--top"></div>
+   
+    <div class="Aligner-item infodiv cacher" id="infoSquare">
+      <div id="interieurInfo"> 
+         <div id="fermer" onclick="fermer()">X</div>
+      <div id="insideInterieurInfo"> <p>GLEU GLEU </p> <p> A project about objects. <br> Interactive drawings <br>  
+      by <a href="http://charlottebroccard.ch/" target="_blank">Charlotte Broccard</a> and
+        <a href="https://mylenedreyer.ch/" target="_blank">Mylène Dreyer</a></p>
+      </div>
+      </div>
+
+    </div>
+    <div class="Aligner-item Aligner-item--bottom"></div>
+</div>
+
+
+
+
+    <div id="explication">
+
+
   
   <div id="titreObjet" > Objet n°1 </div>
     

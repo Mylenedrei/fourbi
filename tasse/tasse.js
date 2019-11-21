@@ -27,7 +27,7 @@ function preload() {
 }
 
 function setup() {
-
+  console.log("hey tasse");
 
   createCanvas(window.innerWidth, window.innerHeight);
   myColor = '#ffcccc';

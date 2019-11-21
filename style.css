@@ -1,12 +1,17 @@
 body{
   background-color: '#FFB5FF';
-  font-family: 'Lora', serif;
+  /*font-family: 'Forum', cursive;*/
+  font-family: "Times New Roman";
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  font-size: 120%;
+  line-height: 2;
 }
 
 #imglogo{
   width:300px;
 }
-
 
 header{
   display:table;
@@ -15,7 +20,6 @@ header{
   height:20px;
   position: fixed;
   top:0px;
- 
 }
 
 header a{
@@ -24,14 +28,13 @@ header a{
   height: 100%;;
   position: absolute;
   right: 0;
-
 }
 
  nav{
   width: auto;
   height: auto;
- position: absolute;
- top:50%;
+  position: absolute;
+  top:50%;
 }
 
 #btn-prev{
@@ -44,34 +47,89 @@ left: 20px;
 
 #btn-next{
   right: 20px;
-  text-align: right;
-  
+  text-align: right; 
 }
 
 main div{
   width: 80%;
 }
 
-#titreObjet{
-text-decoration: underline;
+#interrogation:hover{
+  cursor: pointer;
 }
 
-#explication{
-  position:fixed;
-  width:350px;
-  left:25px;
-  font-size: 90%;
-  bottom:5vh;
-  line-height: 1.4;
-  background-color: azure;
-  border-width:1px;
-  padding: 9px;
-  /*border-radius: 5px;
-  border-width:1px;
- border-style:solid;
- border-color:black;*/
-  opacity: 0.95;
-
+#fermer{
+  cursor:pointer;
+  margin-right: 10px;
+  text-align:right;
 }
 
 
+
+.informations {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:100vh;
+}
+
+.Aligner-item {
+  max-width: 50%;
+}
+
+.infodiv{
+  /*background-color: #FBDED7;*/
+  background-color: pink;
+  /*width:25vw;
+  height:25vh;*/
+  text-align: left;
+  
+}
+
+#interieurInfo{
+  width:50vw;
+  height: 50vh;
+}
+
+a{
+  font-style: none;
+  text-decoration: none;
+  color:black;
+}
+
+a:hover{
+  text-decoration: underline;
+}
+
+#insideInterieurInfo{
+
+  left:30px;
+  top:50px;
+  position: relative;
+
+}
+
+.Aligner-item--top {
+  align-self: flex-start;
+}
+
+.Aligner-item--bottom {
+  align-self: flex-end;
+}
+
+.cacher{
+  visibility: hidden ;
+}
+
+@media only screen and (max-width: 600px) {
+  
+  #insideInterieurInfo{
+
+    left:10px;
+    top:50px;
+    position: relative;
+    font-size: 80%;
+
+  }
+
+}
