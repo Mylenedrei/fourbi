@@ -47,7 +47,7 @@ left: 20px;
 
 #btn-next{
   right: 20px;
-  text-align: right; 
+  text-align: right;
 }
 
 main div{
@@ -65,8 +65,65 @@ main div{
 }
 
 
+#explication{
+  position: fixed;
+width: 350px;
+left: 25px;
+font-size: 90%;
+bottom: 5vh;
+line-height: 1.4;
+background-color: azure;
+border-width: 1px;
+padding: 9px;
+opacity: 0.95;
+}
+
+#infos{
+  margin: 30vh 30vw 30vh 30vw;
+  background-color: pink;
+  position: fixed;
+  width: 40vw;
+  height: 40vh;
+}
+
+@media screen and (max-width: 720px) {
+  #infos{
+    margin: 30vh 10vw 30vh 10vw;
+    width: 80vw;
+    height: 40vh;
+
+
+  }
+}
+
+#content-infos{
+  padding: 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+}
+
+#text-infos{
+
+}
+
+#text-infos p{
+  margin-top: 0px;
+  width: calc(100% - 20px);
+}
+
+#close{
+  cursor:pointer;
+  text-align:right;
+  margin-right: 0;
+  right: 20px;
+}
+
+#infos div{
+  position: absolute;
+}
 
 .informations {
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -83,7 +140,7 @@ main div{
   /*width:25vw;
   height:25vh;*/
   text-align: left;
-  
+
 }
 
 #interieurInfo{
@@ -122,7 +179,7 @@ a:hover{
 }
 
 @media only screen and (max-width: 600px) {
-  
+
   #insideInterieurInfo{
 
     left:10px;
