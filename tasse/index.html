@@ -20,7 +20,7 @@
   <body onresize="resize()" style="overflow:hidden; margin:0;" >
 
  <header>
-  <a id="interrogation" onclick="montrerInfo()"><img src="../img/info.png"></a>
+  <div id="interrogation" onclick="montrerInfo()"><img src="../img/info.png"></div>
 </header>
 
 
@@ -31,47 +31,17 @@
     <nav id="btn-next">
       <a href="../fourchette/"><img src="../img/fleche.png"></a>
     </nav>
-<!--
-    <div class="informations">
-      <div class="Aligner-item Aligner-item--top"></div>
-      <div class="Aligner-item infodiv cacher" id="infoSquare">
-        <div id="interieurInfo">
-          <div id="fermer" onclick="fermer()">X</div>
-          <div id="insideInterieurInfo"> <p>GLEU GLEU </p> <p> A project about objects. <br> Interactive drawings <br>
-               by <a href="http://charlottebroccard.ch/" target="_blank">Charlotte Broccard</a> and
-               <a href="https://mylenedreyer.ch/" target="_blank">Mylène Dreyer</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="Aligner-item Aligner-item--bottom"></div>
-    </div>
--->
 
-<div class="infos">
+<div class="infos cacher" id="infos-id">
     <div id="content-infos">
-      <div id="close" onclick="fermer()">X</div>
-      <div id="text-infos"> <p>FOURBI </p> <p> A project about objects. <br> Interactive drawings <br>
-           by <a href="http://charlottebroccard.ch/" target="_blank">Charlotte Broccard</a> and
-           <a href="https://mylenedreyer.ch/" target="_blank">Mylène Dreyer</a></p>
+
+      <div id="text-infos"> <p id="info-title">FOURBI </p> <p> A project about objects. <br> Interactive drawings <br>
+           by <a href="http://charlottebroccard.ch/" target="_blank" style="color:gray">Charlotte Broccard</a> and
+           <a href="https://mylenedreyer.ch/" target="_blank" style="color:gray">Mylène Dreyer</a></p>
       </div>
+      <div id="close" onclick="fermer()"><img src="../img/croix.png"></div>
   </div>
 </div>
-
-<!--
-    <div id="explication">
-      <div id="titreObjet" > Objet n°1 </div>
-      <div id="expli">
-      <br>
-       La tasse est un contenant.
-        <br>
-         <br>
-       La tasse est un petit contenant.
-       <br>
-        <br>
-       What happens ones can happen twice.
-     </div>
-   </div>
-   -->
 
   </body>
 </html>

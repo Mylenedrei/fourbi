@@ -1,12 +1,12 @@
 body{
-  background-color: '#FFB5FF';
+  background-color: #FFB5FF;
   /*font-family: 'Forum', cursive;*/
-  font-family: "Times New Roman";
+  font-family: "Courier New";
   font-style: normal;
   font-weight: 400;
   letter-spacing: 0.5px;
   font-size: 120%;
-  line-height: 2;
+  line-height: 1.3;
 }
 
 #imglogo{
@@ -22,8 +22,8 @@ header{
   top:0px;
 }
 
-header a{
-  padding: 20px;
+header div{
+  margin: 20px;
   width: auto;
   height: 100%;;
   position: absolute;
@@ -64,23 +64,14 @@ main div{
   text-align:right;
 }
 
-
-#explication{
-  position: fixed;
-width: 350px;
-left: 25px;
-font-size: 90%;
-bottom: 5vh;
-line-height: 1.4;
-background-color: azure;
-border-width: 1px;
-padding: 9px;
-opacity: 0.95;
+.cacher{
+  visibility: hidden ;
 }
 
-#infos{
+
+.infos{
   margin: 30vh 30vw 30vh 30vw;
-  background-color: pink;
+  background-color: white;
   position: fixed;
   width: 40vw;
   height: 40vh;
@@ -91,61 +82,43 @@ opacity: 0.95;
     margin: 30vh 10vw 30vh 10vw;
     width: 80vw;
     height: 40vh;
-
-
   }
 }
 
 #content-infos{
+
   padding: 20px;
   width: calc(100% - 40px);
   height: calc(100% - 40px);
 }
 
 #text-infos{
+  position: absolute;
 
 }
 
 #text-infos p{
   margin-top: 0px;
   width: calc(100% - 20px);
+  z-index: 10;
 }
 
 #close{
+  position: absolute;
   cursor:pointer;
   text-align:right;
   margin-right: 0;
   right: 20px;
+  z-index: 100;
 }
 
 #infos div{
   position: absolute;
 }
 
-.informations {
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height:100vh;
-}
-
-.Aligner-item {
-  max-width: 50%;
-}
-
-.infodiv{
-  /*background-color: #FBDED7;*/
-  background-color: pink;
-  /*width:25vw;
-  height:25vh;*/
-  text-align: left;
-
-}
-
-#interieurInfo{
-  width:50vw;
-  height: 50vh;
+#info-title{
+  text-decoration: underline;
+  width: 60% !important;
 }
 
 a{
@@ -156,37 +129,4 @@ a{
 
 a:hover{
   text-decoration: underline;
-}
-
-#insideInterieurInfo{
-
-  left:30px;
-  top:50px;
-  position: relative;
-
-}
-
-.Aligner-item--top {
-  align-self: flex-start;
-}
-
-.Aligner-item--bottom {
-  align-self: flex-end;
-}
-
-.cacher{
-  visibility: hidden ;
-}
-
-@media only screen and (max-width: 600px) {
-
-  #insideInterieurInfo{
-
-    left:10px;
-    top:50px;
-    position: relative;
-    font-size: 80%;
-
-  }
-
 }
