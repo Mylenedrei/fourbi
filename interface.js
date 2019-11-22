@@ -1,5 +1,5 @@
 	var bool=true;
-	
+
 
 function fermer(){
 var info = document.getElementById('infoSquare');
@@ -16,7 +16,7 @@ function montrerInfo(){
 	var info = document.getElementById('infoSquare');
 
 	bool = !bool;
-	
+
 	if(bool){
 		//cacher l'info
 		info.classList.add("cacher");
@@ -27,6 +27,9 @@ function montrerInfo(){
 	}
 
 
-
-
 }
+
+
+document.getElementById('interrogation').addEventListener("click", function(){
+  console.log("Hello World");
+});
