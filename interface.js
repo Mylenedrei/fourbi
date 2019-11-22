@@ -5,7 +5,7 @@
 
 	//var about = document.getElementById("interrogation");
 addEventListener("click", function(){
-	  console.log("Hello World");
+	 // console.log("Hello World");
 	});
 
 

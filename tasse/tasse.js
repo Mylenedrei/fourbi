@@ -91,7 +91,6 @@ if(press){
     if(anseAnim.position.x < startPosX + 20 && anseAnim.position.y < startPosY + 20 && !hasArrived){
       r = int(random(4));
 
-      console.log(r +" / "+sounds[r]);
       sounds[r].play();
       //sound_bowl.play();
       anseAnim.visible = false;
@@ -170,5 +169,4 @@ function objettonClicked(){
 }
 
 function resize(){
-  console.log("resize");
 }
