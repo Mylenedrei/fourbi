@@ -1,16 +1,16 @@
 
 var anim,normal,objet;
 var myColor;
-  
+
 
 function preload() {
-  
+
   normal = loadAnimation("img/fourchette.png");
-  
+
 }
 
 function setup() {
- 
+
   createCanvas(window.innerWidth, window.innerHeight);
   myColor = '#FFB5FF';
   background(myColor);
@@ -22,19 +22,19 @@ function setup() {
   objet.position.x = innerWidth/2;
   objet.position.y= innerHeight/2;
   objet.velocity.y = 0.5;
-  
+
   mouseX = window.innerWidth/2;
   mouseY = window.innerHeight/2;
 
    objet.onMouseOver = function() {
-   
+
   }
 
   objet.onMouseOut = function() {
-   
+
   }
-  
-  objet.onMousePressed = function(){    
+
+  objet.onMousePressed = function(){
       //window.open('http://capitalc.amsterdam/members','_blank');
   }
 
@@ -59,7 +59,5 @@ function objettonClicked(){
 }
 
 function resize(){
-  console.log("resize");
+  //console.log("resize");
 }
-
-

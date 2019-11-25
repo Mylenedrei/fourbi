@@ -16,7 +16,6 @@ function preload() {
   anse_anim = loadAnimation("anse/anse_00.png","anse/anse_02.png");
   eclair = loadAnimation("eclair/eclair_0000.png","eclair/eclair_0003.png");
   shake_anim = loadAnimation("shake/shake_00.png","shake/shake_06.png");
-  //shake_anim = loadAnimation("vacille/vacille_00.png","vacille/vacille_08.png");
   sound_magnet = loadSound('sound/eclair.mp3');
   sound_glue = loadSound('sound/coller.mp3');
   ceramic0 = loadSound('sound/ceramic_0.mp3');
@@ -31,8 +30,9 @@ function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   myColor = '#ffcccc';
   background(myColor);
-  pot_anim.frameDelay = 6;
 
+
+  pot_anim.frameDelay = 6;
   anse_anim.frameDelay = 6;
   eclair.frameDelay = 6;
   shake_anim.frameDelay = 6;
@@ -43,14 +43,7 @@ function setup() {
   anse = new Anse();
   objet_pot = createSprite(innerWidth/2, innerHeight/2);
   objet_pot.addAnimation('start', pot_anim);
-
   objet_pot.addAnimation('shake', shake_anim);
-  //shake_anim.looping = false;
-
-
-  // shake = createSprite(innerWidth/2, innerHeight/2);
-  // shake.addAnimation("default", shake_anim);
-
   anse.init(startPosX, startPosY);
 
 }
@@ -90,9 +83,7 @@ if(press){
 
     if(anseAnim.position.x < startPosX + 20 && anseAnim.position.y < startPosY + 20 && !hasArrived){
       r = int(random(4));
-
       sounds[r].play();
-      //sound_bowl.play();
       anseAnim.visible = false;
       objet_pot.changeAnimation('shake');
       shakeOn = true;
@@ -109,7 +100,9 @@ if(press){
       objet_pot.changeAnimation('start');
     }
   }
+
 }
+
 
 
 var anseAnim, eclairTop, eclairBottom;
@@ -155,18 +148,7 @@ class Anse{
 
 }
 
-function Group(){
 
-}
-
-function mousePressed() {
-
-
-}
-
-function objettonClicked(){
-
-}
 
 function resize(){
 }
