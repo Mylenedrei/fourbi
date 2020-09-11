@@ -1,0 +1,112 @@
+<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 6.0-c002 79.164360, 2020/02/13-01:07:22        ">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description rdf:about=""
+            xmlns:xmp="http://ns.adobe.com/xap/1.0/"
+            xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/"
+            xmlns:stEvt="http://ns.adobe.com/xap/1.0/sType/ResourceEvent#"
+            xmlns:stRef="http://ns.adobe.com/xap/1.0/sType/ResourceRef#"
+            xmlns:dc="http://purl.org/dc/elements/1.1/"
+            xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
+         <xmp:MetadataDate>2020-04-19T17:12:35+02:00</xmp:MetadataDate>
+         <xmp:ModifyDate>2020-04-19T17:12:35+02:00</xmp:ModifyDate>
+         <xmpMM:InstanceID>xmp.iid:9e03999f-8c1b-468b-8a1d-066ef780ac38</xmpMM:InstanceID>
+         <xmpMM:DocumentID>xmp.did:9e03999f-8c1b-468b-8a1d-066ef780ac38</xmpMM:DocumentID>
+         <xmpMM:OriginalDocumentID>xmp.did:bf1c98f8-c4b1-41b9-a3fa-fc7581d8f5e6</xmpMM:OriginalDocumentID>
+         <xmpMM:History>
+            <rdf:Seq>
+               <rdf:li rdf:parseType="Resource">
+                  <stEvt:action>saved</stEvt:action>
+                  <stEvt:instanceID>xmp.iid:bf1c98f8-c4b1-41b9-a3fa-fc7581d8f5e6</stEvt:instanceID>
+                  <stEvt:when>2019-11-21T14:30:43+01:00</stEvt:when>
+                  <stEvt:softwareAgent>Adobe Audition CC 2018.1 (Macintosh)</stEvt:softwareAgent>
+                  <stEvt:changed>/metadata</stEvt:changed>
+               </rdf:li>
+               <rdf:li rdf:parseType="Resource">
+                  <stEvt:action>saved</stEvt:action>
+                  <stEvt:instanceID>xmp.iid:e175d539-ad6b-404a-9ca9-efb896d3ac35</stEvt:instanceID>
+                  <stEvt:when>2019-11-21T14:30:43+01:00</stEvt:when>
+                  <stEvt:softwareAgent>Adobe Audition CC 2018.1 (Macintosh)</stEvt:softwareAgent>
+                  <stEvt:changed>/</stEvt:changed>
+               </rdf:li>
+               <rdf:li rdf:parseType="Resource">
+                  <stEvt:action>saved</stEvt:action>
+                  <stEvt:instanceID>xmp.iid:6028eaee-6669-4f2d-b877-bc9a067dd185</stEvt:instanceID>
+                  <stEvt:when>2020-04-19T17:12:35+02:00</stEvt:when>
+                  <stEvt:softwareAgent>Adobe Audition 13.0 (Macintosh)</stEvt:softwareAgent>
+                  <stEvt:changed>/metadata</stEvt:changed>
+               </rdf:li>
+               <rdf:li rdf:parseType="Resource">
+                  <stEvt:action>converted</stEvt:action>
+                  <stEvt:parameters>from audio/mpeg to audio/ogg; codec="vorbis"</stEvt:parameters>
+               </rdf:li>
+               <rdf:li rdf:parseType="Resource">
+                  <stEvt:action>saved</stEvt:action>
+                  <stEvt:instanceID>xmp.iid:d0122913-697c-495c-b944-dcba741ba51c</stEvt:instanceID>
+                  <stEvt:when>2020-04-19T17:12:35+02:00</stEvt:when>
+                  <stEvt:softwareAgent>Adobe Audition 13.0 (Macintosh)</stEvt:softwareAgent>
+               </rdf:li>
+               <rdf:li rdf:parseType="Resource">
+                  <stEvt:action>converted</stEvt:action>
+                  <stEvt:parameters>from audio/mpeg to audio/ogg; codec="vorbis"</stEvt:parameters>
+               </rdf:li>
+               <rdf:li rdf:parseType="Resource">
+                  <stEvt:action>saved</stEvt:action>
+                  <stEvt:instanceID>xmp.iid:9e03999f-8c1b-468b-8a1d-066ef780ac38</stEvt:instanceID>
+                  <stEvt:when>2020-04-19T17:12:35+02:00</stEvt:when>
+                  <stEvt:softwareAgent>Adobe Audition 13.0 (Macintosh)</stEvt:softwareAgent>
+                  <stEvt:changed>/</stEvt:changed>
+               </rdf:li>
+            </rdf:Seq>
+         </xmpMM:History>
+         <xmpMM:DerivedFrom rdf:parseType="Resource">
+            <stRef:instanceID>xmp.iid:d0122913-697c-495c-b944-dcba741ba51c</stRef:instanceID>
+            <stRef:documentID>xmp.did:d0122913-697c-495c-b944-dcba741ba51c</stRef:documentID>
+            <stRef:originalDocumentID>xmp.did:bf1c98f8-c4b1-41b9-a3fa-fc7581d8f5e6</stRef:originalDocumentID>
+         </xmpMM:DerivedFrom>
+         <dc:format>audio/ogg; codec="vorbis"</dc:format>
+         <xmpDM:partOfCompilation>false</xmpDM:partOfCompilation>
+         <xmpDM:Tracks>
+            <rdf:Bag>
+               <rdf:li rdf:parseType="Resource">
+                  <xmpDM:trackName>CuePoint Markers</xmpDM:trackName>
+                  <xmpDM:trackType>Cue</xmpDM:trackType>
+                  <xmpDM:frameRate>f44100</xmpDM:frameRate>
+               </rdf:li>
+               <rdf:li rdf:parseType="Resource">
+                  <xmpDM:trackName>CD Track Markers</xmpDM:trackName>
+                  <xmpDM:trackType>Track</xmpDM:trackType>
+                  <xmpDM:frameRate>f44100</xmpDM:frameRate>
+               </rdf:li>
+               <rdf:li rdf:parseType="Resource">
+                  <xmpDM:trackName>Subclip Markers</xmpDM:trackName>
+                  <xmpDM:trackType>InOut</xmpDM:trackType>
+                  <xmpDM:frameRate>f44100</xmpDM:frameRate>
+               </rdf:li>
+            </rdf:Bag>
+         </xmpDM:Tracks>
+      </rdf:Description>
+   </rdf:RDF>
+</x:xmpmeta>
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                           
+<?xpacket end="w"?>

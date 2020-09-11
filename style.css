@@ -1,5 +1,5 @@
 body{
-  background-color: #ffcccc;
+  background-color: white;
   /*font-family: 'Forum', cursive;*/
   font-family: "Courier New";
   font-style: normal;
@@ -7,6 +7,16 @@ body{
   letter-spacing: 0.5px;
   font-size: 120%;
   line-height: 1.3;
+}
+
+#p5_loading{
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  height: auto;
+  margin-top: 45%;
+
+
 }
 
 #imglogo{
@@ -25,16 +35,16 @@ header{
 header div{
   margin: 20px;
   width: auto;
-  height: 100%;;
+  height: 100%;
   position: absolute;
-  right: 0;
+
 }
 
  nav{
   width: auto;
   height: auto;
   position: absolute;
-  top:50%;
+  bottom:10px;
 }
 
 #btn-prev{
@@ -54,8 +64,16 @@ main div{
   width: 80%;
 }
 
-#interrogation:hover{
+#btn-infos:hover{
   cursor: pointer;
+}
+
+#btn-infos{
+  right: 0;
+}
+
+#object-title{
+  left: 0;
 }
 
 #fermer{
@@ -78,7 +96,7 @@ main div{
 }
 
 @media screen and (max-width: 720px) {
-  #infos{
+  .infos{
     margin: 30vh 10vw 30vh 10vw;
     width: 80vw;
     height: 40vh;

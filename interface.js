@@ -3,7 +3,7 @@
 
 
 
-	//var about = document.getElementById("interrogation");
+	//var about = document.getElementById("btn-infos");
 addEventListener("click", function(){
 	 // console.log("Hello World");
 	});

@@ -5,14 +5,14 @@ var myColor;
 
 function preload() {
 
-  normal = loadAnimation("img/fourchette.png");
+  normal = loadAnimation("img/eponge.png");
 
 }
 
 function setup() {
 
   createCanvas(window.innerWidth, window.innerHeight);
-  myColor = '#FFB5FF';
+  myColor = '#dcd700';
   background(myColor);
 
 
@@ -43,8 +43,8 @@ function setup() {
 function draw() {
 
   background(myColor);
-  drawSprites();
-
+   drawSprites();
+  //
   objet.velocity.x = (mouseX - objet.position.x ) * 0.0;
   objet.velocity.y = (mouseY - objet.position.y ) * 0.0;
 
