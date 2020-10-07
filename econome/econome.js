@@ -15,7 +15,6 @@ function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   myColor = '#89891a';
   background(myColor);
-
   anim_base.frameDelay = framedelay;
 
 

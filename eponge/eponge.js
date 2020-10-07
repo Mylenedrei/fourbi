@@ -1,24 +1,26 @@
 
 var anim,normal,objet;
 var myColor;
+var framedelay = 6;
 
 
 function preload() {
 
-  normal = loadAnimation("img/eponge.png");
+  anim_base = loadAnimation("anim/default/eponge01.png","anim/default/eponge03.png");
 
 }
 
 function setup() {
 
   createCanvas(window.innerWidth, window.innerHeight);
-  myColor = '#dcd700';
+  myColor = '#fe5d26';
   background(myColor);
-
+  anim_base.frameDelay = framedelay;
 
   objet = createSprite(40, 20);
-  objet.addAnimation("default",normal);
-  objet.scale = 0.5;
+
+  objet.addAnimation("default", anim_base);
+  objet.scale = 1;
   objet.position.x = innerWidth/2;
   objet.position.y= innerHeight/2;
   objet.velocity.y = 0.5;

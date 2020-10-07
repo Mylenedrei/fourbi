@@ -38,9 +38,10 @@ function preload() {
   sounds = [ceramic0,ceramic1,ceramic2,ceramic3];
 }
 
+
 function setup() {
   cursor('../img/cursor0.png');
-  getAudioContext().resume();
+  //getAudioContext().resume();
 
   createCanvas(window.innerWidth, window.innerHeight);
   myColor = '#ffcccc';
@@ -70,12 +71,19 @@ function setup() {
 
 function draw() {
 
+
   background(myColor);
+  textAlign(CENTER, CENTER);
+
+  text(getAudioContext().state, width/2, height/2);
+
+
   drawSprites();
 
   anseAnim.onMousePressed= function(){
     press = true;
     cursor('../img/cursor4.png');
+
 
   };
 
@@ -200,6 +208,10 @@ if(press){
     }
   }
 
+}
+
+function mousePressed() {
+  //userStartAudio();
 }
 
 
