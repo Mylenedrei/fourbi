@@ -13,19 +13,18 @@ var framedelay = 6;
 
 var isleft = 1;
 
-
 function preload() {
 
   pot_anim = loadAnimation("anim/pot/pot_00.png","anim/pot/pot_02.png");
-//  anse_anim = loadAnimation("anse/anse_00.png","anse/anse_02.png");
 
   anse_attached = loadAnimation("anim/anse_attached/anse03.png","anim/anse_attached/anse05.png");
-  anse_top = loadAnimation("anim/anse_rotation/anses_0006.png");
-  anse_right_t = loadAnimation("anim/anse_rotation/anses_0008.png");
+  anse_top = loadAnimation("anim/anse_top/anses_top_00.png","anim/anse_top/anses_top_05.png");
+  anse_right_t = loadAnimation("anim/anse_right_top/anse_rt_00.png","anim/anse_right_top/anse_rt_05.png");
   anse_right = loadAnimation("anim/anse_right/anse00.png","anim/anse_right/anse05.png");
   anse_right_d = loadAnimation("anim/anse_right_down/anse_rd_00.png","anim/anse_right_down/anse_rd_05.png");
-  anse_down = loadAnimation("anim/anse_rotation/anses_0006.png");
+  anse_down = loadAnimation("anim/anse_front/anses_front00.png","anim/anse_front/anses_front05.png");
   shake_anim = loadAnimation("anim/shake/shake_00.png","anim/shake/shake_06.png");
+
 
 
   soundFormats('mp3', 'ogg');
@@ -40,10 +39,13 @@ function preload() {
 
 
 function setup() {
-  cursor('../img/cursor0.png');
+
+  cursor('default');
+  //cursor('../img/cursor0.png');
   //getAudioContext().resume();
 
-  createCanvas(window.innerWidth, window.innerHeight);
+  createCanvas(innerWidth,innerHeight);
+
   myColor = '#ffcccc';
   background(myColor);
 
@@ -53,6 +55,9 @@ function setup() {
   shake_anim.frameDelay = framedelay;
   anse_right.frameDelay = framedelay;
   anse_right_d.frameDelay = framedelay;
+  anse_right_t.frameDelay = framedelay;
+  anse_down.frameDelay = framedelay;
+  anse_top.frameDelay = framedelay;
 
   anse_xoffset = 98;
   startPosX = innerWidth/2 + anse_xoffset;
@@ -68,7 +73,6 @@ function setup() {
 }
 
 
-
 function draw() {
 
 
@@ -82,23 +86,28 @@ function draw() {
 
   anseAnim.onMousePressed= function(){
     press = true;
-    cursor('../img/cursor4.png');
+  //  cursor('../img/cursor4.png');
+  cursor('grabbing');
+
 
 
   };
 
   anseAnim.onMouseReleased= function(){
     press = false;
-    cursor('../img/cursor0.png');
+  //  cursor('../img/cursor0.png');
+    cursor('default');
 
   };
 
   anseAnim.onMouseOver = function(){
-    cursor('../img/cursor1.jpg');
+  //  cursor('../img/cursor1.jpg');
+  cursor('pointer');
   }
 
   anseAnim.onMouseOut = function(){
-      cursor('../img/cursor0.png');
+    //  cursor('../img/cursor0.png');
+    cursor('default');
   }
 
   //console.log(anseAnim.position.x);
@@ -120,6 +129,7 @@ if(press){
   //  anseAnim.addAnimation('right', anse_right);
     anseAnim.changeAnimation('right');
     anseAnim.mirrorX(-1);
+    objet_pot.depth = 0;
     isleft = -1;
 
   }else if(angleDeg > 22.5 && angleDeg <= 67.5 ){
@@ -127,6 +137,7 @@ if(press){
   //  anseAnim.addAnimation('right top', anse_right_t);
     anseAnim.changeAnimation('right top');
     anseAnim.mirrorX(-1);
+    objet_pot.depth = 10;
     isleft = -1;
 
   }else if(angleDeg > 67.5 && angleDeg <= 112.5 ){
@@ -134,13 +145,14 @@ if(press){
   //  anseAnim.addAnimation('top', anse_top);
     anseAnim.changeAnimation('top');
     anseAnim.mirrorX(-1);
+    objet_pot.depth = 10;
     isleft = -1;
 
   }else if(angleDeg > 112.5 && angleDeg <= 157.5 ){
     //console.log("top right ");
-  //  anseAnim.addAnimation('right top', anse_right_t);
     anseAnim.changeAnimation('right top');
     anseAnim.mirrorX(1);
+    objet_pot.depth = 10;
     isleft = 1;
 
   }else if(angleDeg > 157.5 && angleDeg <= 202.5 ){
@@ -148,6 +160,7 @@ if(press){
     //anseAnim.addAnimation('right', anse_right);
     anseAnim.changeAnimation('right');
     anseAnim.mirrorX(1);
+    objet_pot.depth = 0;
     isleft = 1;
 
   }else if(angleDeg > 202.5 && angleDeg <= 247.5 ){
@@ -155,6 +168,7 @@ if(press){
   //  anseAnim.addAnimation('right down', anse_right_d);
     anseAnim.changeAnimation('right down');
     anseAnim.mirrorX(1);
+    objet_pot.depth = 0;
     isleft = 1;
 
   }else if(angleDeg > 247.5 && angleDeg <= 292.5 ){
@@ -162,6 +176,7 @@ if(press){
     //anseAnim.addAnimation('down', anse_down);
     anseAnim.changeAnimation('down');
     anseAnim.mirrorX(1);
+    objet_pot.depth = 0;
     isleft = 1;
 
   }else if(angleDeg > 292.5  && angleDeg <= 337.5  ){
@@ -169,6 +184,7 @@ if(press){
     //anseAnim.addAnimation('right down', anse_right_d);
     anseAnim.changeAnimation('right down');
     anseAnim.mirrorX(-1);
+    objet_pot.depth = 0;
     isleft = -1;
   }
 
@@ -191,6 +207,7 @@ if(press){
       anseAnim.visible = false;
       objet_pot.changeAnimation('shake');
       objet_pot.mirrorX(isleft);
+      objet_pot.depth = 0;
       shakeOn = true;
       hasArrived = true;
 
@@ -215,7 +232,7 @@ function mousePressed() {
 }
 
 
-var anseAnim, eclairTop, eclairBottom;
+var anseAnim;
 
 class Anse{
 
@@ -247,7 +264,24 @@ class Anse{
   }
 
 
+
+
 }
 
+
 function resize(){
+  resizeCanvas(innerWidth, innerHeight);
+  cameraReset();
+
+  objet_pot.position.x = innerWidth/2;
+  objet_pot.position.y = innerHeight/2;
+  anse_xoffset = 98;
+  startPosX = innerWidth/2 + anse_xoffset;
+  startPosY = innerHeight/2 + 36;
+  anse.display(startPosX,startPosY);
+}
+
+function cameraReset(){
+this.camera.position.x = width/2;
+this.camera.position.y = height/2;
 }
