@@ -40,8 +40,8 @@ function setup() {
 
   initAnimations();
   //initGrid();
-  initCurve();
-  //initVectors();
+  //initCurve();
+  initVectors();
 
 }
 
@@ -78,8 +78,8 @@ function draw() {
 
   drawSprites();
   //drawGrid();
-  drawCurve();
-  //drawVectors()
+  //drawCurve();
+  drawVectors();
 
   // for(var i = 0; i<areas.length ; i++){
   //   var mybtn = areas[i];
@@ -105,16 +105,288 @@ function draw() {
  }
 
 }
-
+var vector;
 function initVectors(){
-
+  vector = new VectorObj();
 }
 
 function drawVectors(){
 
-  //console.log(vectors[0].y);
+  translate(innerWidth/2 , innerHeight/2);
+  var translateX = -85;
+  var translateY = -110;
+  translate(translateX, translateY);
+
+  xOffset = innerWidth/2 + translateX;
+  yOffset = innerHeight/2 + translateY;
+  mx = mouseX - xOffset;
+  my = mouseY - yOffset;
+
+  vector.display();
 
 }
+
+var t;
+var ind = 6;
+var nextPoint = false;
+var px = [14,16, 18, 20, 24, 26, 30, 34, 38, 42, 46,  50,  54,  58,  62,  66,  70,  110, 130, 140, 136, 133, 130, 127, 124, 121, 118, 115, 112, 109 ];
+var py = [0 ,11, 22, 33, 44, 55 ,66, 77, 88, 99, 110, 121, 132, 143, 154, 165, 180, 250, 250, 170, 159, 148, 137, 126, 115, 104, 93,  82,  71,  60 ];
+var tanx, tany;
+
+function VectorObj(){
+  this.x1 = px[ind];
+  this.y1 = py[ind];
+  this.x2 = px[ind+1];
+  this.y2 = py[ind+1];
+
+
+
+
+  this.cx = px[7];
+  this.cy = py[7];
+  this.cd = 60;
+
+  this.display = function(){
+
+    noFill();
+    stroke(0,0,255);
+    beginShape();
+      for(var i = 0; i < px.length; i++){
+        vertex(px[i], py[i]);
+      }
+    endShape();
+    fill(0,0,255);
+    for(var i = 0; i < px.length; i++){
+      ellipse(px[i], py[i],5,5);
+    }
+    //noStroke();
+    stroke(255,200);
+    fill(255,100);
+    line(this.cx, this.cy, mx, my);
+    ellipse(this.cx, this.cy, this.cd, this.cd);
+
+    // for (var i = 0; i < 10; i++) {
+    //   var inc = i/10;
+    //   var x = lerp(this.x1, this.x2, inc);
+    //   var y = lerp(this.y1, this.y2, inc);
+    //   fill(255);
+    //   ellipse(x, y, 5, 5);
+    // }
+
+
+
+
+  }
+
+  this.onMove = function(){
+    var d = dist(mx,my,this.cx,this.cy);
+    if(d < this.cd/2){
+      cursor('grabbing');
+    }else{
+    cursor('default'); }
+
+  }
+
+  this.onPress = function(){
+    var d = dist(mx,my,this.cx,this.cy);
+    if(d < this.cd/2){
+      hasHit = true;
+    }
+  }
+
+
+  this.onDrag = function(){
+
+
+
+    // var d = dist(mx,my,this.cx,this.cy);
+    // if(d < this.cd/2){
+    //   hasHit = true;
+    // }else{
+    //   hasHit = false;
+    // }
+
+    //if(hasHit){
+
+    if(hasHit){
+
+
+
+      //
+      // if(this.y1 < this.y2 && my < this.y1 ){
+      //   t = 0;
+      // }
+        //console.log("t: "+ t);
+
+      if(t == 1 && ind < px.length){
+          if(ind == px.length-1){
+            ind = 0;
+          }else{
+            ind++;
+          }
+
+          this.x1 = px[ind];
+          this.y1 = py[ind];
+          if(ind < px.length - 1){
+            this.x2 = px[ind+1];
+            this.y2 = py[ind+1];
+          }else if(ind == px.length - 1) {
+            this.x2 = px[0];
+            this.y2 = py[0];
+          }
+
+          console.log("up " + ind);
+
+      } else if(t == 0 && ind >= 0){
+
+        if(ind == 0){
+
+          this.x1 = px[px.length - 1];
+          this.y1 = py[px.length - 1];
+          this.x2 = px[0];
+          this.y2 = py[0];
+          ind = px.length - 1;
+
+        }else{
+          ind--;
+          this.x1 = px[ind];
+          this.y1 = py[ind];
+          this.x2 = px[ind+1];
+          this.y2 = py[ind+1];
+        }
+
+
+        console.log("down " + ind);
+      }
+      //console.log(ind+"/"+ px.length);
+
+      // var valueX = map(mx, this.x1, this.x2, 0, 1);
+      // var valueY = map(my, this.y1, this.y2, 0, 1);
+
+      var deltaX = this.x2 - this.x1;
+      var deltaY = this.y2 - this.y1;
+
+      var xa = mx;
+      var ya = my;
+      var xb = this.x1;
+      var yb = this.y1;
+      var xc = this.x2;
+      var yc = this.y2;
+
+      tanx = (( xb * yc - xc * yb ) * (yc - yb) - (ya * (yc-yb) - xa * (xb-xc)) * (xb-xc)) / ((xb-xc)*(xb-xc) + (yc-yb)*(yc-yb));
+      tany = (( xb * yc - xc * yb ) * (xb - xc) + (ya * (yc-yb) - xa * (xb-xc)) * (yc-yb)) / ((xb-xc)*(xb-xc) + (yc-yb)*(yc-yb));
+
+        var valueX = map(tanx, this.x1, this.x2, 0, 1);
+        var valueY = map(tany, this.y1, this.y2, 0, 1);
+
+
+
+      console.log("deltaX: "+deltaX +" deltaY "+ deltaY);
+      if(this.x1 == this.x2){
+        t = valueY;
+      }else if(this.y1 == this.y2){
+       t = valueX;
+     }else{
+       t = (valueX + valueY) / 2 ;
+      }
+      console.log(t);
+     console.log("valx: "+valueX+" / valy: "+ valueY);
+     //t = valueY;
+
+     //console.log("tanx: "+tanx+" / tany: "+ tany);
+     //console.log(	atan2(this.x2, this.y2));
+
+
+
+      t = constrain(t, 0, 1);
+
+      this.cx = lerp(this.x1, this.x2, t);
+      this.cy = lerp(this.y1, this.y2, t);
+      var angleDeg = (Math.atan2(my - this.y2, my - this.x2) * 180 / Math.PI) + 180;
+      // var finalVal = parseInt( angleDeg / 45);
+      console.log(angleDeg);
+      console.log(	atan2(this.y1 - this.y2, this.x1 - this.x2));
+
+
+
+
+      console.log(ind);
+
+      if(ind == 0){
+        object.changeAnimation("anim_1");
+      }else if(ind == 1){
+        object.changeAnimation("anim_2");
+      }else if(ind == 2){
+        object.changeAnimation("anim_3");
+      }else if(ind == 3){
+        object.changeAnimation("anim_4");
+      }else if(ind == 4){
+        object.changeAnimation("anim_5");
+      }else if(ind == 5){
+        object.changeAnimation("anim_6");
+      }else if(ind == 6){
+        object.changeAnimation("anim_7");
+      }else if(ind == 7){
+        object.changeAnimation("default");
+      }else if(ind == 8){
+        object.changeAnimation("anim_9");
+      }else if(ind == 9){
+        object.changeAnimation("anim_10");
+      }else if(ind == 10){
+        object.changeAnimation("anim_11");
+      }else if(ind == 11){
+        object.changeAnimation("anim_12");
+      }else if(ind == 12){
+        object.changeAnimation("anim_13");
+      }else if(ind == 13){
+        object.changeAnimation("anim_14");
+      }else if(ind == 14){
+        object.changeAnimation("anim_15");
+      }else if(ind == 15){
+        object.changeAnimation("anim_15");
+      }else if(ind == 16){
+        object.changeAnimation("anim_1");
+      }else if(ind == 17){
+        object.changeAnimation("anim_2");
+      }else if(ind == 18){
+        object.changeAnimation("anim_3");
+      }else if(ind == 19){
+        object.changeAnimation("anim_4");
+      }else if(ind == 20){
+        object.changeAnimation("anim_5");
+      }else if(ind == 21){
+        object.changeAnimation("anim_6");
+      }else if(ind == 22){
+        object.changeAnimation("anim_7");
+      }else if(ind == 23){
+        object.changeAnimation("anim_default");
+      }else if(ind == 24){
+        object.changeAnimation("anim_8");
+      }else if(ind == 25){
+        object.changeAnimation("anim_9");
+      }else if(ind == 26){
+        object.changeAnimation("anim_10");
+      }else if(ind == 27){
+        object.changeAnimation("anim_11");
+      }else if(ind == 28){
+        object.changeAnimation("anim_12");
+      }else if(ind == 29){
+        object.changeAnimation("anim_13");
+      }
+
+
+
+
+}
+
+  }
+
+  this.onRelease = function(mx,my){
+    hasHit = false;
+
+  }
+}
+
 
 var curve;
 function initCurve(){
@@ -137,19 +409,9 @@ function drawCurve(){
 
 }
 
-var vectors = [
-  {
-    x:0,
-    y:4
-  },
-  {
-    x:2,
-    y:3
-  }];
 
-function vectorsObj(){
 
-}
+
 
 var cposx, cposy;
 function CurveObj(){
@@ -180,6 +442,7 @@ function CurveObj(){
     //noStroke();
     stroke(255,200);
     noFill();
+    //line(this.x1,this.y1, this.x4, this.y4);
     bezier(this.x1, this.y1, this.x2, this.y2, this.x3, this.y3, this.x4, this.y4);
     fill(255,150);
     ellipse(this.cx, this.cy, this.cd, this.cd);
@@ -232,15 +495,19 @@ function CurveObj(){
     // }else{
     //   hasHit = false;
     // }
-    if(hasHit && my <= 180 && my >= 0){
+    if(hasHit && my <= this.y4 && my >= this.y1 && mx <= this.x4 && mx >= this.x1 ){
 
 
-      var valueX = map(mx, 0, 100, 0, 1);
-      var valueY = map(my, 0, 180, 0, 1);
-      this.cx = bezierPoint(this.x1, this.x2, this.x3, this.x4, valueY);
-      this.cy = bezierPoint(this.y1, this.y2, this.y3, this.y4, valueY);
+      var valueX = map(mx, this.x1, this.x4, 0, 1);
+      var valueY = map(my, this.y1, this.y4, 0, 1);
+      var t = (valueX + valueY)/2;
+      console.log(t);
+      if(t >= 0 && t<= 1){
+        this.cx = bezierPoint(this.x1, this.x2, this.x3, this.x4, t);
+        this.cy = bezierPoint(this.y1, this.y2, this.y3, this.y4, t);
+      }
 
-      var v = parseInt(valueY*100);
+      var v = parseInt(t*100);
 
 
       console.log(v);
@@ -260,7 +527,7 @@ function CurveObj(){
       }else if(v >= tPoints[6] && v < tPoints[7]){
         object.changeAnimation("anim_7");
       }else if(v >= tPoints[7] && v < tPoints[8]){
-        object.changeAnimation("anim_default");
+        object.changeAnimation("default");
       }else if(v >= tPoints[8] && v < tPoints[9]){
         object.changeAnimation("anim_9");
       }else if(v >= tPoints[9] && v < tPoints[10]){
@@ -276,57 +543,6 @@ function CurveObj(){
       }else if(v <= tPoints[14] && v >= tPoints[14]-3){
         object.changeAnimation("anim_15");
       }
-/*
-      switch(v) {
-        case >= tPoints[0]:
-        case < tPoints[1]:
-            object.changeAnimation("anim_1");
-          break;
-        case v >= tPoints[1] && v < tPoints[2]:
-            object.changeAnimation("anim_2");
-          break;
-        case v >= tPoints[2] && v < tPoints[3]:
-            object.changeAnimation("anim_3");
-          break;
-        case v >= tPoints[3] && v < tPoints[4]:
-            object.changeAnimation("anim_4");
-          break;
-        case v >= tPoints[4] && v < tPoints[5]:
-            object.changeAnimation("anim_5");
-          break;
-        case v >= tPoints[5] && v < tPoints[6]:
-            object.changeAnimation("anim_6");
-          break;
-        case v >= tPoints[6] && v < tPoints[7]:
-            object.changeAnimation("anim_7");
-          break;
-        case v >= tPoints[7] && v < tPoints[8]:
-            object.changeAnimation("default");
-          break;
-        case tPoints[8]:
-              object.changeAnimation("anim_9");
-          break;
-        case tPoints[9]:
-              object.changeAnimation("anim_10");
-          break;
-        case tPoints[10]:
-            object.changeAnimation("anim_11");
-          break;
-        case tPoints[11]:
-            object.changeAnimation("anim_12");
-          break;
-        case tPoints[12]:
-            object.changeAnimation("anim_13");
-          break;
-        case tPoints[13]:
-            object.changeAnimation("anim_14");
-          break;
-        case tPoints[14]:
-            object.changeAnimation("anim_15");
-          break;
-
-        }
-*/
     }
   }
 
@@ -505,31 +721,35 @@ function mouseDragged(){
 
 
 
-  for(var i=0; i<grid.length; i++){
-    grid[i].onDrag();
-  }
-  curve.onDrag();
+  // for(var i=0; i<grid.length; i++){
+  //   grid[i].onDrag();
+  // }
+  // curve.onDrag();
+  vector.onDrag();
 }
 
 function mouseMoved(){
 
-  curve.onMove();
+  //curve.onMove();
+  vector.onMove();
 }
 
 function mousePressed(){
 
-  for(var i=0; i<grid.length; i++){
-    grid[i].onPress();
-  }
-  curve.onPress();
+  // for(var i=0; i<grid.length; i++){
+  //   grid[i].onPress();
+  // }
+  // curve.onPress();
+  vector.onPress();
 }
 
 function mouseReleased() {
 
-  for(var i=0; i<grid.length; i++){
-    grid[i].onRelease();
-  }
-  curve.onRelease();
+  // for(var i=0; i<grid.length; i++){
+  //   grid[i].onRelease();
+  // }
+  // curve.onRelease();
+  vector.onRelease();
 }
 
 
