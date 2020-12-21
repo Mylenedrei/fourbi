@@ -132,6 +132,8 @@ var nextPoint = false;
 var px = [14,16, 18, 20, 24, 26, 30, 34, 38, 42, 46,  50,  54,  58,  62,  66,  70,  110, 130, 140, 136, 133, 130, 127, 124, 121, 118, 115, 112, 109 ];
 var py = [0 ,11, 22, 33, 44, 55 ,66, 77, 88, 99, 110, 121, 132, 143, 154, 165, 180, 250, 250, 170, 159, 148, 137, 126, 115, 104, 93,  82,  71,  60 ];
 var tanx, tany;
+var hasPassed = false;
+var lastAngle;
 
 function VectorObj(){
   this.x1 = px[ind];
@@ -160,20 +162,15 @@ function VectorObj(){
       ellipse(px[i], py[i],5,5);
     }
     //noStroke();
+    strokeWeight(3);
+    stroke(0,255,0);
+    line(this.cx, this.cy, tanx, tany);
+    strokeWeight(1);
+    stroke(255,0,0);
+    line(this.cx, this.cy, mx, my);
     stroke(255,200);
     fill(255,100);
-    line(this.cx, this.cy, mx, my);
     ellipse(this.cx, this.cy, this.cd, this.cd);
-
-    // for (var i = 0; i < 10; i++) {
-    //   var inc = i/10;
-    //   var x = lerp(this.x1, this.x2, inc);
-    //   var y = lerp(this.y1, this.y2, inc);
-    //   fill(255);
-    //   ellipse(x, y, 5, 5);
-    // }
-
-
 
 
   }
@@ -198,26 +195,61 @@ function VectorObj(){
   this.onDrag = function(){
 
 
-
-    // var d = dist(mx,my,this.cx,this.cy);
-    // if(d < this.cd/2){
-    //   hasHit = true;
-    // }else{
-    //   hasHit = false;
-    // }
-
-    //if(hasHit){
-
     if(hasHit){
 
+      var xa = mx;
+      var ya = my;
+      var xb = this.x1;
+      var yb = this.y1;
+      var xc = this.x2;
+      var yc = this.y2;
+
+      tanx = (( xb * yc - xc * yb ) * (yc - yb) - (ya * (yc-yb) - xa * (xb-xc)) * (xb-xc)) / ((xb-xc)*(xb-xc) + (yc-yb)*(yc-yb));
+      tany = (( xb * yc - xc * yb ) * (xb - xc) + (ya * (yc-yb) - xa * (xb-xc)) * (yc-yb)) / ((xb-xc)*(xb-xc) + (yc-yb)*(yc-yb));
+
+      var valueX = map(tanx, this.x1, this.x2, 0, 1);
+      var valueY = map(tany, this.y1, this.y2, 0, 1);
+
+      if(this.x1 == this.x2){
+        t = valueY;
+      }else if(this.y1 == this.y2){
+       t = valueX;
+     }else{
+       t = (valueX + valueY) / 2 ;
+      }
+
+     //console.log("tanx: "+tanx+" / tany: "+ tany);
+     //console.log(	atan2(this.x2, this.y2));
+
+      t = constrain(t, 0, 1);
+
+      this.cx = lerp(this.x1, this.x2, t);
+      this.cy = lerp(this.y1, this.y2, t);
 
 
-      //
-      // if(this.y1 < this.y2 && my < this.y1 ){
-      //   t = 0;
-      // }
-        //console.log("t: "+ t);
+      var deltaXm = mx - this.cx;
+      var deltaYm = my - this.cy;
+      var radm = Math.atan2(deltaYm, deltaXm);
+      var degm = radm * (180 / Math.PI);
 
+      var deltaX = tanx - this.cx;
+     var deltaY = tany - this.cy;
+     var rad = Math.atan2(deltaY, deltaX);
+     var deg = rad * (180 / Math.PI);
+
+
+
+
+        if(t > 0 && t < 1){
+          pass = true;
+        }else{
+          pass = false;
+        }
+
+      //console.log("t: "+ t +" / "+hasPassed);
+//console.log("haspassed: " + hasPassed);
+
+//if(!hasPassed){
       if(t == 1 && ind < px.length){
           if(ind == px.length-1){
             ind = 0;
@@ -235,7 +267,16 @@ function VectorObj(){
             this.y2 = py[0];
           }
 
-          console.log("up " + ind);
+          console.log("up");
+          hasPassed = true;
+          // var deltaX = tanx - this.cx;
+          // var deltaY = tany - this.cy;
+          // var rad = Math.atan2(deltaY, deltaX);
+          // var deg = rad * (180 / Math.PI);
+          // lastAngle = deg;
+
+
+
 
       } else if(t == 0 && ind >= 0){
 
@@ -256,61 +297,32 @@ function VectorObj(){
         }
 
 
-        console.log("down " + ind);
+        console.log("down");
+        hasPassed = true;
+
       }
+// }
+// if(hasPassed && t > 0 && t < 1 ){
+//   hasPassed = false;
+// }
+//else if(hasPassed && t == lastT){
+//   hasPassed = false;
+//   console.log("HERRRRR");
+// }
+
       //console.log(ind+"/"+ px.length);
 
       // var valueX = map(mx, this.x1, this.x2, 0, 1);
       // var valueY = map(my, this.y1, this.y2, 0, 1);
 
-      var deltaX = this.x2 - this.x1;
-      var deltaY = this.y2 - this.y1;
-
-      var xa = mx;
-      var ya = my;
-      var xb = this.x1;
-      var yb = this.y1;
-      var xc = this.x2;
-      var yc = this.y2;
-
-      tanx = (( xb * yc - xc * yb ) * (yc - yb) - (ya * (yc-yb) - xa * (xb-xc)) * (xb-xc)) / ((xb-xc)*(xb-xc) + (yc-yb)*(yc-yb));
-      tany = (( xb * yc - xc * yb ) * (xb - xc) + (ya * (yc-yb) - xa * (xb-xc)) * (yc-yb)) / ((xb-xc)*(xb-xc) + (yc-yb)*(yc-yb));
-
-        var valueX = map(tanx, this.x1, this.x2, 0, 1);
-        var valueY = map(tany, this.y1, this.y2, 0, 1);
-
-
-
-      console.log("deltaX: "+deltaX +" deltaY "+ deltaY);
-      if(this.x1 == this.x2){
-        t = valueY;
-      }else if(this.y1 == this.y2){
-       t = valueX;
-     }else{
-       t = (valueX + valueY) / 2 ;
-      }
-      console.log(t);
-     console.log("valx: "+valueX+" / valy: "+ valueY);
-     //t = valueY;
-
-     //console.log("tanx: "+tanx+" / tany: "+ tany);
-     //console.log(	atan2(this.x2, this.y2));
-
-
-
-      t = constrain(t, 0, 1);
-
-      this.cx = lerp(this.x1, this.x2, t);
-      this.cy = lerp(this.y1, this.y2, t);
-      var angleDeg = (Math.atan2(my - this.y2, my - this.x2) * 180 / Math.PI) + 180;
-      // var finalVal = parseInt( angleDeg / 45);
-      console.log(angleDeg);
-      console.log(	atan2(this.y1 - this.y2, this.x1 - this.x2));
 
 
 
 
-      console.log(ind);
+
+
+
+      console.log(degm +" / "+ deg +" / " + t);
 
       if(ind == 0){
         object.changeAnimation("anim_1");
