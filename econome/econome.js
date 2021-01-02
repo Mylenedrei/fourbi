@@ -40,8 +40,8 @@ function setup() {
 
   initAnimations();
   //initGrid();
-  //initCurve();
   initVectors();
+
 
 }
 
@@ -78,7 +78,6 @@ function draw() {
 
   drawSprites();
   //drawGrid();
-  //drawCurve();
   drawVectors();
 
   // for(var i = 0; i<areas.length ; i++){
@@ -106,6 +105,7 @@ function draw() {
 
 }
 var vector;
+var pos
 function initVectors(){
   vector = new VectorObj();
 }
@@ -123,30 +123,47 @@ function drawVectors(){
   my = mouseY - yOffset;
 
   vector.display();
+  //vector2.display();
 
 }
 
 var t;
-var ind = 6;
+//var coord = [];
 var nextPoint = false;
-var px = [14,16, 18, 20, 24, 26, 30, 34, 38, 42, 46,  50,  54,  58,  62,  66,  70,  110, 130, 140, 136, 133, 130, 127, 124, 121, 118, 115, 112, 109 ];
-var py = [0 ,11, 22, 33, 44, 55 ,66, 77, 88, 99, 110, 121, 132, 143, 154, 165, 180, 250, 250, 170, 159, 148, 137, 126, 115, 104, 93,  82,  71,  60 ];
-var tanx, tany;
-var hasPassed = false;
-var lastAngle;
+var px = [14,16, 18, 20, 24, 26, 30, 34, 38, 42, 46,  50,  54,  58,  62,  70,  70,  110, 130, 140, 136, 133, 130, 127, 124, 121, 118, 115, 112, 109 ];
+var py = [0 ,11, 22, 33, 44, 55 ,66, 77, 88, 99, 110, 121, 132, 143, 154, 165, 200, 250, 250, 170, 159, 148, 137, 126, 115, 104, 93,  82,  71,  60 ];
+var tanx, tany, ind, hasHit, hitNum ;
+
+
 
 function VectorObj(){
-  this.x1 = px[ind];
-  this.y1 = py[ind];
-  this.x2 = px[ind+1];
-  this.y2 = py[ind+1];
 
 
+  var ind1 = 6;
+  var ind2 = 20;
+  var coord = [
+    {
+    cx:px[ind1],
+    cy:py[ind1],
+    x1:px[ind1],
+    y1:py[ind1],
+    x2:px[ind1+1],
+    y2:py[ind1+1],
+    ind:ind1
+  },
+  {
+    cx:px[ind2],
+    cy:py[ind2],
+    x1:px[ind2],
+    y1:py[ind2],
+    x2:px[ind2+1],
+    y2:py[ind2+1],
+    ind:ind2
+  }];
 
-
-  this.cx = px[7];
-  this.cy = py[7];
   this.cd = 60;
+
+
 
   this.display = function(){
 
@@ -162,32 +179,43 @@ function VectorObj(){
       ellipse(px[i], py[i],5,5);
     }
     //noStroke();
-    strokeWeight(3);
-    stroke(0,255,0);
-    line(this.cx, this.cy, tanx, tany);
-    strokeWeight(1);
-    stroke(255,0,0);
-    line(this.cx, this.cy, mx, my);
+    // strokeWeight(3);
+    // stroke(0,255,0);
+    // line(this.cx, this.cy, tanx, tany);
+    // strokeWeight(1);
+    // stroke(255,0,0);
+    // line(this.cx, this.cy, mx, my);
     stroke(255,200);
     fill(255,100);
-    ellipse(this.cx, this.cy, this.cd, this.cd);
+    // ellipse(this.cx, this.cy, this.cd, this.cd);
+
+    ellipse(coord[0].cx, coord[0].cy, this.cd, this.cd);
+    ellipse(coord[1].cx, coord[1].cy, this.cd, this.cd);
 
 
   }
 
   this.onMove = function(){
-    var d = dist(mx,my,this.cx,this.cy);
-    if(d < this.cd/2){
+    var d1 = dist(mx,my,coord[0].cx,coord[0].cy);
+    var d2 = dist(mx,my,coord[1].cx,coord[1].cy);
+    if(d1 < this.cd/2 || d2 < this.cd/2){
       cursor('grabbing');
+      console.log();
     }else{
     cursor('default'); }
 
   }
 
   this.onPress = function(){
-    var d = dist(mx,my,this.cx,this.cy);
-    if(d < this.cd/2){
+    var d1 = dist(mx,my,coord[0].cx,coord[0].cy);
+    var d2 = dist(mx,my,coord[1].cx,coord[1].cy);
+    if(d1 < this.cd/2){
       hasHit = true;
+      hitNum = 0;
+
+    }else if(d2 < this.cd/2){
+      hasHit = true;
+      hitNum = 1;
     }
   }
 
@@ -197,132 +225,134 @@ function VectorObj(){
 
     if(hasHit){
 
+      for(var i = 0; i<2; i++){
+
+
+      if(i == hitNum){
+
       var xa = mx;
       var ya = my;
-      var xb = this.x1;
-      var yb = this.y1;
-      var xc = this.x2;
-      var yc = this.y2;
+      // var xb = this.x1;
+      // var yb = this.y1;
+      // var xc = this.x2;
+      // var yc = this.y2;
+      var xb = coord[i].x1;
+      var yb = coord[i].y1;
+      var xc = coord[i].x2;
+      var yc = coord[i].y2;
 
-      tanx = (( xb * yc - xc * yb ) * (yc - yb) - (ya * (yc-yb) - xa * (xb-xc)) * (xb-xc)) / ((xb-xc)*(xb-xc) + (yc-yb)*(yc-yb));
-      tany = (( xb * yc - xc * yb ) * (xb - xc) + (ya * (yc-yb) - xa * (xb-xc)) * (yc-yb)) / ((xb-xc)*(xb-xc) + (yc-yb)*(yc-yb));
+      tanx = (( xb * yc - xc * yb ) * (yc-yb) - (ya * (yc-yb) - xa * (xb-xc)) * (xb-xc)) / ((xb-xc)*(xb-xc) + (yc-yb)*(yc-yb));
+      tany = (( xb * yc - xc * yb ) * (xb-xc) + (ya * (yc-yb) - xa * (xb-xc)) * (yc-yb)) / ((xb-xc)*(xb-xc) + (yc-yb)*(yc-yb));
 
-      var valueX = map(tanx, this.x1, this.x2, 0, 1);
-      var valueY = map(tany, this.y1, this.y2, 0, 1);
+        var valueX = map(tanx, coord[i].x1, coord[i].x2, 0, 1);
+        var valueY = map(tany, coord[i].y1, coord[i].y2, 0, 1);
 
-      if(this.x1 == this.x2){
+      if(coord[i].x1 == coord[i].x2){
         t = valueY;
-      }else if(this.y1 == this.y2){
+      }else if(coord[i].y1 == coord[i].y2){
        t = valueX;
      }else{
        t = (valueX + valueY) / 2 ;
       }
 
-     //console.log("tanx: "+tanx+" / tany: "+ tany);
-     //console.log(	atan2(this.x2, this.y2));
-
       t = constrain(t, 0, 1);
+}
 
-      this.cx = lerp(this.x1, this.x2, t);
-      this.cy = lerp(this.y1, this.y2, t);
-
-
-      var deltaXm = mx - this.cx;
-      var deltaYm = my - this.cy;
-      var radm = Math.atan2(deltaYm, deltaXm);
-      var degm = radm * (180 / Math.PI);
-
-      var deltaX = tanx - this.cx;
-     var deltaY = tany - this.cy;
-     var rad = Math.atan2(deltaY, deltaX);
-     var deg = rad * (180 / Math.PI);
+      coord[i].cx = lerp(coord[i].x1, coord[i].x2, t);
+      coord[i].cy = lerp(coord[i].y1, coord[i].y2, t);
 
 
 
+      // this.cx = coord[0].x;
+      // this.cy = coord[0].y;
+      // this.cx2 = coord[1].x;
+      // this.cy2 = coord[1].y;
 
-        if(t > 0 && t < 1){
-          pass = true;
-        }else{
-          pass = false;
-        }
 
-      //console.log("t: "+ t +" / "+hasPassed);
-//console.log("haspassed: " + hasPassed);
-
-//if(!hasPassed){
-      if(t == 1 && ind < px.length){
-          if(ind == px.length-1){
-            ind = 0;
+      if(t == 1 && coord[i].ind < px.length){
+          if(coord[i].ind == px.length-1){
+            coord[i].ind = 0;
           }else{
-            ind++;
+            coord[i].ind = coord[i].ind + 1;
           }
 
-          this.x1 = px[ind];
-          this.y1 = py[ind];
-          if(ind < px.length - 1){
-            this.x2 = px[ind+1];
-            this.y2 = py[ind+1];
-          }else if(ind == px.length - 1) {
-            this.x2 = px[0];
-            this.y2 = py[0];
+          coord[i].x1 = px[coord[i].ind];
+          coord[i].y1 = py[coord[i].ind];
+          if(coord[i].ind < px.length - 1){
+            coord[i].x2 = px[coord[i].ind + 1];
+            coord[i].y2 = py[coord[i].ind + 1];
+          }else if(coord[i].ind == px.length - 1) {
+            coord[i].x2 = px[0];
+            coord[i].y2 = py[0];
           }
 
-          console.log("up");
-          hasPassed = true;
-          // var deltaX = tanx - this.cx;
-          // var deltaY = tany - this.cy;
-          // var rad = Math.atan2(deltaY, deltaX);
-          // var deg = rad * (180 / Math.PI);
-          // lastAngle = deg;
+          console.log("ind 1: " + coord[0].ind);
+          console.log("ind 2: " + coord[1].ind);
 
 
+      } else if(t == 0 && coord[i].ind >= 0){
 
+        if(coord[i].ind == 0){
 
-      } else if(t == 0 && ind >= 0){
-
-        if(ind == 0){
-
-          this.x1 = px[px.length - 1];
-          this.y1 = py[px.length - 1];
-          this.x2 = px[0];
-          this.y2 = py[0];
-          ind = px.length - 1;
+          coord[i].x1 = px[px.length - 1];
+          coord[i].y1 = py[px.length - 1];
+          coord[i].x2 = px[0];
+          coord[i].y2 = py[0];
+          coord[i].ind = px.length - 1;
 
         }else{
-          ind--;
-          this.x1 = px[ind];
-          this.y1 = py[ind];
-          this.x2 = px[ind+1];
-          this.y2 = py[ind+1];
+          coord[i].ind = coord[i].ind - 1;
+          coord[i].x1 = px[coord[i].ind];
+          coord[i].y1 = py[coord[i].ind];
+          coord[i].x2 = px[coord[i].ind+1];
+          coord[i].y2 = py[coord[i].ind+1];
         }
-
-
-        console.log("down");
-        hasPassed = true;
-
       }
-// }
-// if(hasPassed && t > 0 && t < 1 ){
-//   hasPassed = false;
-// }
-//else if(hasPassed && t == lastT){
-//   hasPassed = false;
-//   console.log("HERRRRR");
-// }
-
-      //console.log(ind+"/"+ px.length);
-
-      // var valueX = map(mx, this.x1, this.x2, 0, 1);
-      // var valueY = map(my, this.y1, this.y2, 0, 1);
 
 
 
 
+      // if(t == 1 && ind < px.length){
+      //     if(ind == px.length-1){
+      //       ind = 0;
+      //     }else{
+      //       ind++;
+      //     }
+      //
+      //     this.x1 = px[ind];
+      //     this.y1 = py[ind];
+      //     if(ind < px.length - 1){
+      //       this.x2 = px[ind+1];
+      //       this.y2 = py[ind+1];
+      //     }else if(ind == px.length - 1) {
+      //       this.x2 = px[0];
+      //       this.y2 = py[0];
+      //     }
+      //
+      //
+      //
+      // } else if(t == 0 && ind >= 0){
+      //
+      //   if(ind == 0){
+      //
+      //     this.x1 = px[px.length - 1];
+      //     this.y1 = py[px.length - 1];
+      //     this.x2 = px[0];
+      //     this.y2 = py[0];
+      //     ind = px.length - 1;
+      //
+      //   }else{
+      //     ind--;
+      //     this.x1 = px[ind];
+      //     this.y1 = py[ind];
+      //     this.x2 = px[ind+1];
+      //     this.y2 = py[ind+1];
+      //   }
+      // }
 
 
-
-
-      console.log(degm +" / "+ deg +" / " + t);
+ind = coord[0].ind;
+if(t > 0 && t < 1){
 
       if(ind == 0){
         object.changeAnimation("anim_1");
@@ -371,7 +401,7 @@ function VectorObj(){
       }else if(ind == 22){
         object.changeAnimation("anim_7");
       }else if(ind == 23){
-        object.changeAnimation("anim_default");
+        object.changeAnimation("default");
       }else if(ind == 24){
         object.changeAnimation("anim_8");
       }else if(ind == 25){
@@ -385,9 +415,9 @@ function VectorObj(){
       }else if(ind == 29){
         object.changeAnimation("anim_13");
       }
+    }
 
-
-
+    }
 
 }
 
@@ -395,175 +425,14 @@ function VectorObj(){
 
   this.onRelease = function(mx,my){
     hasHit = false;
-
   }
 }
 
 
-var curve;
-function initCurve(){
-  curve = new CurveObj();
-}
-
-
-function drawCurve(){
-  translate(innerWidth/2 , innerHeight/2);
-  var translateX = -85;
-  var translateY = -110;
-  translate(translateX, translateY);
-
-  xOffset = innerWidth/2 + translateX;
-  yOffset = innerHeight/2 + translateY;
-  mx = mouseX - xOffset;
-  my = mouseY - yOffset;
-
-  curve.display();
-
-}
 
 
 
 
-
-var cposx, cposy;
-function CurveObj(){
-
-  // this.cx = cx;
-  // this.cy = cy;
-  // this.cd = cd;
-  this.x1 = 20;
-  this.y1 = 0;
-  this.x4 = 75;
-  this.y4 = 180;
-  this.x2 = 30;
-  this.y2 = 45;
-  this.x3 = 70;
-  this.y3 = 165;
-
-  var hasHit = false;
-  var tPoints = [0, 6, 12, 18, 24,  30, 35, 40, 48, 56, 64, 72, 80, 88, 100];
-
-  var startx = bezierPoint(this.x1, this.x2, this.x3, this.x4, tPoints[7]/100);
-  var starty = bezierPoint(this.y1, this.y2, this.y3, this.y4, tPoints[7]/100);
-
-  this.cx = startx;
-  this.cy = starty;
-  this.cd = 60;
-
-  this.display = function(){
-    //noStroke();
-    stroke(255,200);
-    noFill();
-    //line(this.x1,this.y1, this.x4, this.y4);
-    bezier(this.x1, this.y1, this.x2, this.y2, this.x3, this.y3, this.x4, this.y4);
-    fill(255,150);
-    ellipse(this.cx, this.cy, this.cd, this.cd);
-    for (var i = 0; i < tPoints.length; i++) {
-      var t = tPoints[i]/100;
-      var x = bezierPoint(this.x1, this.x2, this.x3, this.x4, t);
-      var y = bezierPoint(this.y1, this.y2, this.y3, this.y4, t);
-      fill(255);
-      ellipse(x, y, 5, 5);
-    }
-
-    // var x = bezierPoint(x1, x2, x3, x4, 0.5);
-    // var y = bezierPoint(y1, y2, y3, y4, 0.5);
-    // ellipse(x, y, 20, 20);
-
-  }
-
-  this.onMove = function(){
-    var d = dist(mx,my,this.cx,this.cy);
-    if(d < this.cd/2){
-      cursor('grabbing');
-    }else{
-    cursor('default'); }
-
-    // console.log("mx:"+ mx+"/ my:"+my);
-    // var valueX = map(mx, 0, 100, 0, 1);
-    // var valueY = map(my, 0, 220, 0, 1);
-    //   console.log("valx:"+ valueX+"/ valy:"+valueY);
-    // this.cx = bezierPoint(this.x1, this.x2, this.x3, this.x4, valueY);
-    // this.cy = bezierPoint(this.y1, this.y2, this.y3, this.y4, valueY);
-
-  }
-
-  this.onPress = function(){
-    var d = dist(mx,my,this.cx,this.cy);
-    if(d < this.cd/2){
-      hasHit = true;
-    }
-
-  cposx = this.x;
-  cposy = this.cy;
-  }
-
-
-  this.onDrag = function(){
-
-    // var d = dist(mx,my,this.cx,this.cy);
-    // if(d < this.cd/2){
-    //   hasHit = true;
-    // }else{
-    //   hasHit = false;
-    // }
-    if(hasHit && my <= this.y4 && my >= this.y1 && mx <= this.x4 && mx >= this.x1 ){
-
-
-      var valueX = map(mx, this.x1, this.x4, 0, 1);
-      var valueY = map(my, this.y1, this.y4, 0, 1);
-      var t = (valueX + valueY)/2;
-      console.log(t);
-      if(t >= 0 && t<= 1){
-        this.cx = bezierPoint(this.x1, this.x2, this.x3, this.x4, t);
-        this.cy = bezierPoint(this.y1, this.y2, this.y3, this.y4, t);
-      }
-
-      var v = parseInt(t*100);
-
-
-      console.log(v);
-
-      if(v >= tPoints[0] && v < tPoints[1]){
-        object.changeAnimation("anim_1");
-      }else if(v >= tPoints[1] && v < tPoints[2]){
-        object.changeAnimation("anim_2");
-      }else if(v >= tPoints[2] && v < tPoints[3]){
-        object.changeAnimation("anim_3");
-      }else if(v >= tPoints[3] && v < tPoints[4]){
-        object.changeAnimation("anim_4");
-      }else if(v >= tPoints[4] && v < tPoints[5]){
-        object.changeAnimation("anim_5");
-      }else if(v >= tPoints[5] && v < tPoints[6]){
-        object.changeAnimation("anim_6");
-      }else if(v >= tPoints[6] && v < tPoints[7]){
-        object.changeAnimation("anim_7");
-      }else if(v >= tPoints[7] && v < tPoints[8]){
-        object.changeAnimation("default");
-      }else if(v >= tPoints[8] && v < tPoints[9]){
-        object.changeAnimation("anim_9");
-      }else if(v >= tPoints[9] && v < tPoints[10]){
-        object.changeAnimation("anim_10");
-      }else if(v >= tPoints[10] && v < tPoints[11]){
-        object.changeAnimation("anim_11");
-      }else if(v >= tPoints[11] && v < tPoints[12]){
-        object.changeAnimation("anim_12");
-      }else if(v >= tPoints[12] && v < tPoints[13]){
-        object.changeAnimation("anim_13");
-      }else if(v >= tPoints[13] && v < tPoints[14]-3){
-        object.changeAnimation("anim_14");
-      }else if(v <= tPoints[14] && v >= tPoints[14]-3){
-        object.changeAnimation("anim_15");
-      }
-    }
-  }
-
-  this.onRelease = function(mx,my){
-    hasHit = false;
-
-  }
-
-}
 
 
 var grid = [];
@@ -738,12 +607,13 @@ function mouseDragged(){
   // }
   // curve.onDrag();
   vector.onDrag();
+  //vector2.onDrag();
 }
 
 function mouseMoved(){
 
   //curve.onMove();
-  vector.onMove();
+  //vector1.onMove();
 }
 
 function mousePressed(){
@@ -753,6 +623,7 @@ function mousePressed(){
   // }
   // curve.onPress();
   vector.onPress();
+//  vector2.onPress();
 }
 
 function mouseReleased() {
@@ -762,6 +633,7 @@ function mouseReleased() {
   // }
   // curve.onRelease();
   vector.onRelease();
+  //vector2.onRelease();
 }
 
 
