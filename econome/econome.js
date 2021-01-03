@@ -5,26 +5,45 @@ var framedelay = 6;
 var ctx,canvas,offsetX,offsetY;
 var rects;
 var areas = [];
+var numOfAnim = 24;
 
-
+var animations = [];
 function preload() {
 
-  anim_base = loadAnimation("anim/full/econome_00.png","anim/full/econome_02.png");
-  anim_1 = loadAnimation("anim/full/econome_24.png");
-  anim_2 = loadAnimation("anim/full/econome_23.png");
-  anim_3 = loadAnimation("anim/full/econome_22.png");
-  anim_4 = loadAnimation("anim/full/econome_21.png");
-  anim_5 = loadAnimation("anim/full/econome_20.png");
-  anim_6 = loadAnimation("anim/full/econome_19.png");
-  anim_7 = loadAnimation("anim/full/econome_18.png");
-  anim_8 = loadAnimation("anim/full/econome_17.png");
-  anim_9 = loadAnimation("anim/full/econome_15.png");
-  anim_10 = loadAnimation("anim/full/econome_14.png");
-  anim_11 = loadAnimation("anim/full/econome_13.png");
-  anim_12 = loadAnimation("anim/full/econome_12.png");
-  anim_13 = loadAnimation("anim/full/econome_11.png");
-  anim_14 = loadAnimation("anim/full/econome_10.png");
-  anim_15 = loadAnimation("anim/full/econome_09.png");
+
+  for (var i = 0; i <= numOfAnim ; i++){
+    if(i<10){
+      animations[i] = loadAnimation("anim/sequ/econome_0"+i+".png");
+    } else{
+      animations[i] = loadAnimation("anim/sequ/econome_"+i+".png");
+    }
+
+  }
+
+  //anim_base = loadAnimation("anim/full/econome_00.png","anim/full/econome_02.png");
+  // anim_0 = loadAnimation("anim/sequ/econome_00.png");
+  // anim_1 = loadAnimation("anim/sequ/econome_01.png");
+  // anim_2 = loadAnimation("anim/sequ/econome_02.png");
+  // anim_3 = loadAnimation("anim/sequ/econome_03.png");
+  // anim_4 = loadAnimation("anim/sequ/econome_04.png");
+  // anim_5 = loadAnimation("anim/sequ/econome_05.png");
+  // anim_6 = loadAnimation("anim/sequ/econome_06.png");
+  // anim_7 = loadAnimation("anim/sequ/econome_07.png");
+  // anim_8 = loadAnimation("anim/sequ/econome_08.png");
+  // anim_9 = loadAnimation("anim/sequ/econome_09.png");
+  // anim_10 = loadAnimation("anim/sequ/econome_10.png");
+  // anim_11 = loadAnimation("anim/sequ/econome_11.png");
+  // anim_12 = loadAnimation("anim/sequ/econome_12.png");
+  // anim_13 = loadAnimation("anim/sequ/econome_13.png");
+  // anim_14 = loadAnimation("anim/sequ/econome_14.png");
+  // anim_15 = loadAnimation("anim/sequ/econome_14.png");
+  // anim_16 = loadAnimation("anim/sequ/econome_14.png");
+  // anim_17 = loadAnimation("anim/sequ/econome_14.png");
+
+
+
+
+
 
 }
 
@@ -47,25 +66,30 @@ function setup() {
 
 function initAnimations(){
 
-  anim_base.frameDelay = framedelay;
+  //anim_base.frameDelay = framedelay;
 
   object = createSprite(innerWidth/2, innerHeight/2);
-  object.addAnimation("default",anim_base);
-  object.addAnimation("anim_1", anim_1);
-  object.addAnimation("anim_2", anim_2);
-  object.addAnimation("anim_3", anim_3);
-  object.addAnimation("anim_4", anim_4);
-  object.addAnimation("anim_5", anim_5);
-  object.addAnimation("anim_6", anim_6);
-  object.addAnimation("anim_7", anim_7);
-  object.addAnimation("anim_8", anim_8);
-  object.addAnimation("anim_9", anim_9);
-  object.addAnimation("anim_10", anim_10);
-  object.addAnimation("anim_11", anim_11);
-  object.addAnimation("anim_12", anim_12);
-  object.addAnimation("anim_13", anim_13);
-  object.addAnimation("anim_14", anim_14);
-  object.addAnimation("anim_15", anim_15);
+//  object.addAnimation("default",anim_base);
+  // object.addAnimation("anim_1", anim_1);
+  // object.addAnimation("anim_2", anim_2);
+  // object.addAnimation("anim_3", anim_3);
+  // object.addAnimation("anim_4", anim_4);
+  // object.addAnimation("anim_5", anim_5);
+  // object.addAnimation("anim_6", anim_6);
+  // object.addAnimation("anim_7", anim_7);
+  // object.addAnimation("anim_8", anim_8);
+  // object.addAnimation("anim_9", anim_9);
+  // object.addAnimation("anim_10", anim_10);
+  // object.addAnimation("anim_11", anim_11);
+  // object.addAnimation("anim_12", anim_12);
+  // object.addAnimation("anim_13", anim_13);
+  // object.addAnimation("anim_14", anim_14);
+  // object.addAnimation("anim_15", anim_15);
+
+  for(var i = 0; i <= numOfAnim; i ++ ){
+    animations[i].frameDelay = framedelay;
+    object.addAnimation("anim_"+i, animations[i]);
+  }
 
 
 }
@@ -130,8 +154,8 @@ function drawVectors(){
 var t;
 //var coord = [];
 var nextPoint = false;
-var px = [14,16, 18, 20, 24, 26, 30, 34, 38, 42, 46,  50,  54,  58,  62,  70,  70,  110, 130, 140, 136, 133, 130, 127, 124, 121, 118, 115, 112, 109 ];
-var py = [0 ,11, 22, 33, 44, 55 ,66, 77, 88, 99, 110, 121, 132, 143, 154, 165, 200, 250, 250, 170, 159, 148, 137, 126, 115, 104, 93,  82,  71,  60 ];
+var px = [30, 34, 38, 42, 46,  50,  54,  58,  62,  70,  80,  90, 110,    140, 150, 133, 130, 127, 124, 121, 118, 115,14,16, 18, 20 ];
+var py = [66, 77, 88, 99, 110, 121, 132, 143, 154, 180, 210, 230, 250,    230, 200, 148, 137, 126, 115, 104, 93,  82,0 ,11, 22, 33  ];
 var tanx, tany, ind, hasHit, hitNum ;
 
 
@@ -178,13 +202,12 @@ function VectorObj(){
     for(var i = 0; i < px.length; i++){
       ellipse(px[i], py[i],5,5);
     }
-    //noStroke();
     // strokeWeight(3);
     // stroke(0,255,0);
-    // line(this.cx, this.cy, tanx, tany);
+    // line(coord[0].cx, coord[0].cy, tanx, tany);
     // strokeWeight(1);
     // stroke(255,0,0);
-    // line(this.cx, this.cy, mx, my);
+    // line(coord[0].cx, coord[0].cy, mx, my);
     stroke(255,200);
     fill(255,100);
     // ellipse(this.cx, this.cy, this.cd, this.cd);
@@ -354,6 +377,17 @@ function VectorObj(){
 ind = coord[0].ind;
 if(t > 0 && t < 1){
 
+
+  for(var i = 0; i<= numOfAnim ; i++){
+    if(ind == i){
+      object.changeAnimation("anim_"+i);
+      if(i > numOfAnim){
+        object.changeAnimation("anim_"+i-numOfAnim);
+      }
+    }
+  }
+/*
+
       if(ind == 0){
         object.changeAnimation("anim_1");
       }else if(ind == 1){
@@ -415,6 +449,8 @@ if(t > 0 && t < 1){
       }else if(ind == 29){
         object.changeAnimation("anim_13");
       }
+
+      */
     }
 
     }
