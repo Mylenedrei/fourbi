@@ -5,13 +5,13 @@ var framedelay = 6;
 var ctx,canvas,offsetX,offsetY;
 var rects;
 var areas = [];
-var numOfAnim = 24;
+var numOfAnim = 26;
 
 var animations = [];
 function preload() {
 
 
-  for (var i = 0; i <= numOfAnim ; i++){
+  for (var i = 0; i < numOfAnim ; i++){
     if(i<10){
       animations[i] = loadAnimation("anim/sequ/econome_0"+i+".png");
     } else{
@@ -39,9 +39,6 @@ function preload() {
   // anim_15 = loadAnimation("anim/sequ/econome_14.png");
   // anim_16 = loadAnimation("anim/sequ/econome_14.png");
   // anim_17 = loadAnimation("anim/sequ/econome_14.png");
-
-
-
 
 
 
@@ -86,7 +83,7 @@ function initAnimations(){
   // object.addAnimation("anim_14", anim_14);
   // object.addAnimation("anim_15", anim_15);
 
-  for(var i = 0; i <= numOfAnim; i ++ ){
+  for(var i = 0; i < numOfAnim; i ++ ){
     animations[i].frameDelay = framedelay;
     object.addAnimation("anim_"+i, animations[i]);
   }
@@ -129,11 +126,13 @@ function draw() {
 
 }
 var vector;
-var pos
+
+//crée l'objet vector
 function initVectors(){
   vector = new VectorObj();
 }
 
+// MET AU CENTRE ET PERMET DE RESIZER, FAIRE CORRESPONDRE LES POS DE LA SOURIS -----------------------------------------------------
 function drawVectors(){
 
   translate(innerWidth/2 , innerHeight/2);
@@ -146,25 +145,51 @@ function drawVectors(){
   mx = mouseX - xOffset;
   my = mouseY - yOffset;
 
-  vector.display();
-  //vector2.display();
+  // pour afficher le system d'interaction (lignes, points et cercles). Mettre en commentaire pour ne plus afficher
+  //vector.display();
 
 }
 
-var t;
-//var coord = [];
-var nextPoint = false;
-var px = [30, 34, 38, 42, 46,  50,  54,  58,  62,  70,  80,  90, 110,    140, 150, 133, 130, 127, 124, 121, 118, 115,14,16, 18, 20 ];
-var py = [66, 77, 88, 99, 110, 121, 132, 143, 154, 180, 210, 230, 250,    230, 200, 148, 137, 126, 115, 104, 93,  82,0 ,11, 22, 33  ];
-var tanx, tany, ind, hasHit, hitNum ;
+
+var inc = 0;
+//var pos = [ {x:30,y:66} , {x:34,y:77} , {x:38,y:88} ];
+var px = [42, 45, 50,  53,  56,  60,  66,  70,  72,  81,  87,  94,  107, 122, 137, 145, 148, 149, 148, 145, 143, 140, 138, 131, 128,124,    120, 118, 116, 116, 115, 115, 112, 111,  98,  87,  80,  75,  70,  65, 60,  55,  50,   45,  35,   25,  20, 22, 25, 28,32, 38];
+var py = [80, 94, 108, 120, 136, 155, 167, 182, 196, 213, 228, 240, 249, 252, 241, 228, 211, 198, 185, 170, 150, 135, 115, 95,  80, 65,     52,  40,  30,  18,  5,  0,  -10, -20,    -25, -25, -20, -18, -16, -15, -14, -13, -12, -11, -10,  -9,   10,25, 35, 45, 52, 65];
+var pos = [];
+
+function drawPoints(posx,posy){
 
 
+  // pos[inc].x = posx;
+  // pos[inc].y = posy;
+  // inc++;
+  posx = parseInt(posx);
+  posy = parseInt(posy);
+  pos.push({x:posx,y:posy} );
+  px.push(posx);
+  py.push(posy);
+
+  vector = new VectorObj();
+  vector.display();
+  console.log(inc);
+  console.log(px);
+  console.log(py);
+  console.log(pos);
+  inc++;
+}
+
+
+//points à mapper à l'animation
+
+
+var t = 0;
+var tanx, tany, ind, hasHit, hitNum;
 
 function VectorObj(){
 
-
-  var ind1 = 6;
-  var ind2 = 20;
+  console.log(px.length);
+  var ind1 = 0;
+  var ind2 = numOfAnim-1;
   var coord = [
     {
     cx:px[ind1],
@@ -188,7 +213,7 @@ function VectorObj(){
   this.cd = 60;
 
 
-
+  //Affiche le systeme d'interaction
   this.display = function(){
 
     noFill();
@@ -198,9 +223,18 @@ function VectorObj(){
         vertex(px[i], py[i]);
       }
     endShape();
-    fill(0,0,255);
+    noStroke();
     for(var i = 0; i < px.length; i++){
+      if(i == numOfAnim || i == 0){
+        fill(255,0,0);
+      }else{
+        fill(0,0,255);
+      }
+      textSize(10);
+      var s = String(i);
+      text(s, px[i] + 5, py[i]);
       ellipse(px[i], py[i],5,5);
+
     }
     // strokeWeight(3);
     // stroke(0,255,0);
@@ -245,52 +279,45 @@ function VectorObj(){
 
   this.onDrag = function(){
 
+// MAP LA POSITION DE LA SOURIS EN UNE VALEUR T QUI VA DE 0 à 1 -----------------------------------------------------
 
     if(hasHit){
 
+      //loop pour sychroniser le système des deux "trigger boucle" de l'econome
       for(var i = 0; i<2; i++){
 
+        //condition qui définit quel quelle boucle de l'économe j'ai selectioné (voir dans vectorObj() > this.onpress)
+        if(i == hitNum){
+          var xa = mx;
+          var ya = my;
+          var xb = coord[i].x1;
+          var yb = coord[i].y1;
+          var xc = coord[i].x2;
+          var yc = coord[i].y2;
 
-      if(i == hitNum){
+          tanx = (( xb * yc - xc * yb ) * (yc-yb) - (ya * (yc-yb) - xa * (xb-xc)) * (xb-xc)) / ((xb-xc)*(xb-xc) + (yc-yb)*(yc-yb));
+          tany = (( xb * yc - xc * yb ) * (xb-xc) + (ya * (yc-yb) - xa * (xb-xc)) * (yc-yb)) / ((xb-xc)*(xb-xc) + (yc-yb)*(yc-yb));
 
-      var xa = mx;
-      var ya = my;
-      // var xb = this.x1;
-      // var yb = this.y1;
-      // var xc = this.x2;
-      // var yc = this.y2;
-      var xb = coord[i].x1;
-      var yb = coord[i].y1;
-      var xc = coord[i].x2;
-      var yc = coord[i].y2;
+          var valueX = map(tanx, coord[i].x1, coord[i].x2, 0, 1);
+          var valueY = map(tany, coord[i].y1, coord[i].y2, 0, 1);
 
-      tanx = (( xb * yc - xc * yb ) * (yc-yb) - (ya * (yc-yb) - xa * (xb-xc)) * (xb-xc)) / ((xb-xc)*(xb-xc) + (yc-yb)*(yc-yb));
-      tany = (( xb * yc - xc * yb ) * (xb-xc) + (ya * (yc-yb) - xa * (xb-xc)) * (yc-yb)) / ((xb-xc)*(xb-xc) + (yc-yb)*(yc-yb));
+          if(coord[i].x1 == coord[i].x2){
+            t = valueY;
+          }else if(coord[i].y1 == coord[i].y2){
+           t = valueX;
+         }else{
+           t = (valueX + valueY) / 2 ;
+          }
 
-        var valueX = map(tanx, coord[i].x1, coord[i].x2, 0, 1);
-        var valueY = map(tany, coord[i].y1, coord[i].y2, 0, 1);
-
-      if(coord[i].x1 == coord[i].x2){
-        t = valueY;
-      }else if(coord[i].y1 == coord[i].y2){
-       t = valueX;
-     }else{
-       t = (valueX + valueY) / 2 ;
+          t = constrain(t, 0, 1);
       }
-
-      t = constrain(t, 0, 1);
-}
 
       coord[i].cx = lerp(coord[i].x1, coord[i].x2, t);
       coord[i].cy = lerp(coord[i].y1, coord[i].y2, t);
 
 
 
-      // this.cx = coord[0].x;
-      // this.cy = coord[0].y;
-      // this.cx2 = coord[1].x;
-      // this.cy2 = coord[1].y;
-
+// PASSER AUX POINTS SUIVANT OU PRECENDENT (INCREMENTE LE TABLEAU DES POSITIONS) -----------------------------------------------------
 
       if(t == 1 && coord[i].ind < px.length){
           if(coord[i].ind == px.length-1){
@@ -309,8 +336,8 @@ function VectorObj(){
             coord[i].y2 = py[0];
           }
 
-          console.log("ind 1: " + coord[0].ind);
-          console.log("ind 2: " + coord[1].ind);
+          // console.log("ind 1: " + coord[0].ind);
+          // console.log("ind 2: " + coord[1].ind);
 
 
       } else if(t == 0 && coord[i].ind >= 0){
@@ -335,57 +362,32 @@ function VectorObj(){
 
 
 
-      // if(t == 1 && ind < px.length){
-      //     if(ind == px.length-1){
-      //       ind = 0;
-      //     }else{
-      //       ind++;
-      //     }
-      //
-      //     this.x1 = px[ind];
-      //     this.y1 = py[ind];
-      //     if(ind < px.length - 1){
-      //       this.x2 = px[ind+1];
-      //       this.y2 = py[ind+1];
-      //     }else if(ind == px.length - 1) {
-      //       this.x2 = px[0];
-      //       this.y2 = py[0];
-      //     }
-      //
-      //
-      //
-      // } else if(t == 0 && ind >= 0){
-      //
-      //   if(ind == 0){
-      //
-      //     this.x1 = px[px.length - 1];
-      //     this.y1 = py[px.length - 1];
-      //     this.x2 = px[0];
-      //     this.y2 = py[0];
-      //     ind = px.length - 1;
-      //
-      //   }else{
-      //     ind--;
-      //     this.x1 = px[ind];
-      //     this.y1 = py[ind];
-      //     this.x2 = px[ind+1];
-      //     this.y2 = py[ind+1];
-      //   }
-      // }
 
+
+// POUR CHANGER LES ANIMATIONS AU PASSAGE DES POINTS -----------------------------------------------------
 
 ind = coord[0].ind;
+//console.log(ind);
+// condition pour éviter les bug au passage des points
 if(t > 0 && t < 1){
 
+  // comme les conditions en commentaire dessous mais sous forme de loop pour simplifier
+  for(var j = 0; j < numOfAnim*2 ; j++){
 
-  for(var i = 0; i<= numOfAnim ; i++){
-    if(ind == i){
-      object.changeAnimation("anim_"+i);
-      if(i > numOfAnim){
-        object.changeAnimation("anim_"+i-numOfAnim);
+    if(ind == j){
+      console.log(j);
+      if(j > numOfAnim){
+
+        var newj = j - numOfAnim;
+        console.log(newj);
+
+        object.changeAnimation("anim_"+newj);
+      }else{
+        object.changeAnimation("anim_"+j);
       }
     }
   }
+
 /*
 
       if(ind == 0){
@@ -449,17 +451,15 @@ if(t > 0 && t < 1){
       }else if(ind == 29){
         object.changeAnimation("anim_13");
       }
-
       */
     }
-
-    }
-
+  }
 }
 
   }
 
   this.onRelease = function(mx,my){
+
     hasHit = false;
   }
 }
@@ -467,7 +467,7 @@ if(t > 0 && t < 1){
 
 
 
-
+//CODE POUR LA GRILLE INTERACTIVE------------------------------------------
 
 
 
@@ -633,23 +633,19 @@ function GridObj(x, y, index){
 }
 
 
-
+//MOUS EVENTS
 function mouseDragged(){
-
 
 
   // for(var i=0; i<grid.length; i++){
   //   grid[i].onDrag();
   // }
-  // curve.onDrag();
   vector.onDrag();
-  //vector2.onDrag();
 }
 
 function mouseMoved(){
 
-  //curve.onMove();
-  //vector1.onMove();
+
 }
 
 function mousePressed(){
@@ -657,9 +653,11 @@ function mousePressed(){
   // for(var i=0; i<grid.length; i++){
   //   grid[i].onPress();
   // }
-  // curve.onPress();
+
   vector.onPress();
-//  vector2.onPress();
+  if(savePoints){
+    drawPoints(mx,my);
+  }
 }
 
 function mouseReleased() {
@@ -667,9 +665,21 @@ function mouseReleased() {
   // for(var i=0; i<grid.length; i++){
   //   grid[i].onRelease();
   // }
-  // curve.onRelease();
   vector.onRelease();
-  //vector2.onRelease();
+}
+
+var savePoints = false;
+function keyPressed() {
+  if (key == "p") {
+    px = [];
+    py = [];
+    savePoints = true;
+  }else if(key == "s"){
+    savePoints = false;
+    inc = 0;
+
+  }
+
 }
 
 
