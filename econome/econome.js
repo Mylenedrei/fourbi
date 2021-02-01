@@ -146,7 +146,7 @@ function drawVectors(){
   my = mouseY - yOffset;
 
   // pour afficher le system d'interaction (lignes, points et cercles). Mettre en commentaire pour ne plus afficher
-  //vector.display();
+  vector.display();
 
 }
 
@@ -230,18 +230,18 @@ function VectorObj(){
       }else{
         fill(0,0,255);
       }
-      textSize(10);
-      var s = String(i);
-      text(s, px[i] + 5, py[i]);
-      ellipse(px[i], py[i],5,5);
+      // textSize(10);
+      // var s = String(i);
+      // text(s, px[i] + 5, py[i]);
+      // ellipse(px[i], py[i],5,5);
 
     }
-    // strokeWeight(3);
-    // stroke(0,255,0);
+    //strokeWeight(3);
+    stroke(0,255,0);
     // line(coord[0].cx, coord[0].cy, tanx, tany);
     // strokeWeight(1);
     // stroke(255,0,0);
-    // line(coord[0].cx, coord[0].cy, mx, my);
+    line(coord[0].cx, coord[0].cy, mx, my);
     stroke(255,200);
     fill(255,100);
     // ellipse(this.cx, this.cy, this.cd, this.cd);
@@ -368,18 +368,19 @@ function VectorObj(){
 
 ind = coord[0].ind;
 //console.log(ind);
+
 // condition pour éviter les bug au passage des points
-if(t > 0 && t < 1){
+//if(t > 0 && t < 1){
 
   // comme les conditions en commentaire dessous mais sous forme de loop pour simplifier
   for(var j = 0; j < numOfAnim*2 ; j++){
 
     if(ind == j){
       console.log(j);
-      if(j > numOfAnim){
+      if(j >= numOfAnim){
 
         var newj = j - numOfAnim;
-        console.log(newj);
+        //console.log(newj);
 
         object.changeAnimation("anim_"+newj);
       }else{
@@ -452,7 +453,7 @@ if(t > 0 && t < 1){
         object.changeAnimation("anim_13");
       }
       */
-    }
+    //}
   }
 }
 
